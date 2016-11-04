@@ -1,6 +1,6 @@
 ## trying to write a function that will do the cleaning of netlogo data
 
-CannNetLogoToR <- function (inputfile, rowstodelete8isNow1){
+CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   library(dplyr)
   library(tidyr)
   library(zoo)
@@ -22,12 +22,12 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1){
   fd1 <- t(d1)
   
   ## rename the first column and change whole thing to a dataframe
-  colnames(fd1)[1:2] <- c("inf_death_modifier", "type")
+  colnames(fd1)[1:2] <- c(VariableChanged, "type")
   
   fd1 <- as.data.frame(fd1)
   
   ## replace all the NAs for the values with the previous ones, since they only go every other.
-  fd1$inf_death_modifier <- na.locf(fd1$inf_death_modifier, fromLast = T)
+  fd1$VariableChanged <- na.locf(fd1$VariableChanged, fromLast = T)
   
   ## get rid of row with nothing in it
   fd2 <- fd1[-1,]
