@@ -7,7 +7,7 @@ library(tidyr)
 library(zoo)
 
 ## get rid of the header portion, which doesn't have column titles, which messes stuff up
-d <- read.csv("Documents/Cannibalism_ABM_Project/Cannibalism_sensitivity_infected-death-modifier-spreadsheet.csv", skip = 6, na.strings = "")
+d <- read.csv("Github/Cannibalism_ABM_Project/Cannibalism_sensitivity_infected-death-modifier-spreadsheet.csv", skip = 6, na.strings = "")
 
 ## this deletes all the other rows of blah information
 d1 <- d[-c(1, 3:27),]

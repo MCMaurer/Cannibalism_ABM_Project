@@ -3,7 +3,7 @@
 ## TO DO: change it so that an argument is the name of the variable changing in the trials, and so it
 ## gets referenced as fd2$VariableChanged
 
-CannNetLogoToR <- function (inputfile, rowstodelete8isNow1){
+CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   library(dplyr)
   library(tidyr)
   library(zoo)
@@ -25,12 +25,12 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1){
   fd1 <- t(d1)
   
   ## rename the first column and change whole thing to a dataframe
-  colnames(fd1)[1:2] <- c("VariableChanged", "type")
+  colnames(fd1)[1:2] <- c(VariableChanged, "type")
   
   fd1 <- as.data.frame(fd1)
   
   ## replace all the NAs for the values with the previous ones, since they only go every other.
-  fd1$VariableChanged <- na.locf(fd1$VariableChanged, fromLast = T)
+  fd1[[VariableChanged]] <- na.locf(fd1[[VariableChanged]], fromLast = T)
   
   ## get rid of row with nothing in it
   fd2 <- fd1[-1,]
@@ -50,7 +50,7 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1){
   fd3 <- gather(fd2, Time, Count, 3:10003)
   
   # arrange the data just so
-  fd4 <- arrange(fd3, Run, VariableChanged, type, Time)
+  fd4 <- arrange(fd3, Run, fd3[,1], type, Time)
   
   return(fd4)
 }
