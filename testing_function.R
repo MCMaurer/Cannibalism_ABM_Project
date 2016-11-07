@@ -1,10 +1,10 @@
 setwd("/Users/MJ")
 data <- CannNetLogoToR("Documents/Cannibalism_ABM_Project/Cannibalism_sensitivity_infected-death-modifier-spreadsheet.csv", 
-                       c(1, 3:27), "Inf_Death_Modifier")
+                       c(1, 3:28), "Inf_Death_Modifier")
 
 
 data2 <- CannNetLogoToR("Github/Cannibalism_ABM_Project/Cannibalism_sensitivity_inf-fecund-modifier-spreadsheet.csv", 
-                        c(1:13, 15:27), "Inf_Fecund_modifier")
+                        c(1:13, 15:28), "Inf_Fecund_modifier")
 
 
 write.csv(data, "Documents/Cannibalism_ABM_Project/InfDeathOutput.csv")
@@ -32,7 +32,6 @@ View(datasmall)
 
 View(data_small)
 
-datasmall$Inf_Death_Modifier <- as.numeric(datasmall$Inf_Death_Modifier)
 datasmall$Time <- as.numeric(datasmall$Time)
 datasmall$Count <- as.numeric(datasmall$Count)
 datasmall$type <- as.factor(datasmall$type)
