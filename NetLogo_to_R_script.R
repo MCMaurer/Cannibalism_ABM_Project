@@ -38,7 +38,7 @@ fd1["Inf_Death_Modifier"] <- na.locf(fd1["Inf_Death_Modifier"])
 
 fd1$Inf_Death_Modifier <- as.numeric(fd1$Inf_Death_Modifier)
 
-fd1[length(fd1),1] <- NA
+fd1[length(fd1[,1]),1] <- NA
 
 
 ## create a Run column
@@ -55,7 +55,10 @@ fd1$type <- gsub("count\\s", "", fd1$type)
 fd1$Run
 
 # time to TIDY IT UP
-fd2 <- gather(fd1, Time, Count)
+
+## This works now!!
+
+fd2 <- gather(fd1, Time, Count, -c(1:2,Run))
 
 ?gather
 
