@@ -8,7 +8,7 @@ library(zoo)
 
 
 ## get rid of the header portion, which doesn't have column titles, which messes stuff up
-d <- read.csv(file = "Github/Cannibalism_ABM_Project/Cannibalism_inf_death_small.csv", skip = 6, na.strings = "")
+d <- read.csv(file = "Github/Cannibalism_ABM_Project/Cannibalism_inf_death_small.csv", skip = 6, stringsAsFactors = F, na.strings = "")
 
 ## this deletes all the other rows of blah information
 d1 <- d[-c(1, 3:28),]
@@ -36,7 +36,9 @@ fd1 <- as.data.frame(fd1)
 ## replace all the NAs for the values with the previous ones, since they only go every other.
 fd1["Inf_Death_Modifier"] <- na.locf(fd1["Inf_Death_Modifier"])
 
+fd1$Inf_Death_Modifier <- as.numeric(fd1$Inf_Death_Modifier)
 
+fd1[length(fd1),1] <- NA
 
 
 ## create a Run column
@@ -50,8 +52,12 @@ fd1$Run <- as.numeric(fd1$Run)
 # get rid of "count " from the type column
 fd1$type <- gsub("count\\s", "", fd1$type)
 
+fd1$Run
+
 # time to TIDY IT UP
-fd2 <- gather(fd1, Time, Count, -(1:2))
+fd2 <- gather(fd1, Time, Count)
+
+?gather
 
 # arrange the data just so
 fd3 <- arrange(fd2, Run, fd2[,1], type, Time)
