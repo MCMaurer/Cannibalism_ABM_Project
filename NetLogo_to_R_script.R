@@ -8,7 +8,7 @@ library(zoo)
 
 
 ## get rid of the header portion, which doesn't have column titles, which messes stuff up
-d <- read.csv(file = "Documents/Cannibalism_ABM_Project/Cannibalism_inf_death_small.csv", skip = 6, na.strings = "")
+d <- read.csv(file = "Github/Cannibalism_ABM_Project/Cannibalism_inf_death_small.csv", skip = 6, na.strings = "")
 
 ## this deletes all the other rows of blah information
 d1 <- d[-c(1, 3:28),]
@@ -17,16 +17,11 @@ d1 <- d[-c(1, 3:28),]
 d1$time <- rownames(d1)
 d1$time <- as.numeric(d1$time)
 d1$time <- (d1$time - 29)
-
+d1$time[[1]] <- "inf_death_modifier"
 rownames(d1) <- d1$time
-d1$time <- NULL
-
-rownames(d1)[1] <- "inf_death_modifier"
-
-d1$time <- rownames(d1)
 d1$time <- as.numeric(d1$time)
-
-View(d1$time)
+d1 <- d1[,-1]
+head(d1$time)
 
 ## flip the script!
 fd1 <- t(d1)
@@ -39,7 +34,7 @@ colnames(fd1)[1:2] <- c("Inf_Death_Modifier", "type")
 fd1 <- as.data.frame(fd1)
 
 ## replace all the NAs for the values with the previous ones, since they only go every other.
-fd1[[VariableChanged]] <- na.locf(fd1[[VariableChanged]], fromLast = T)
+fd1[["Inf_Death_Modifier"]] <- na.locf(fd1[["Inf_Death_Modifier"]], fromLast = T)
 
 ## get rid of row with nothing in it
 fd2 <- fd1[-1,]
