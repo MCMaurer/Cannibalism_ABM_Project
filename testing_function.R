@@ -48,6 +48,8 @@ datasmall %>%
 
 ## do something to average counts at each time point for each run in a given paramater value, then plot
 
+## this could give a much cleaner plot
+
   
 View(head(data_small))
   
