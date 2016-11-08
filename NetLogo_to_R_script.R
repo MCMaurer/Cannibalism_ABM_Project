@@ -55,16 +55,12 @@ fd1$type <- gsub("count\\s", "", fd1$type)
 fd1$Run
 
 # time to TIDY IT UP
-
-## This works now!!
-
 fd2 <- gather(fd1, Time, Count, -c(1:2,Run))
-
-?gather
 
 # arrange the data just so
 fd3 <- arrange(fd2, Run, fd2[,1], type, Time)
 
-fd4$Run <- as.numeric(fd4$Run)
-fd4$type <- as.numeric(fd4$type)
-fd4$Time <- as.numeric(fd4$Time)
+fd3$Run <- as.numeric(fd3$Run)
+fd3$Time <- as.numeric(fd3$Time)
+fd3$Count <- as.numeric(fd3$Count)
+View(fd3)
