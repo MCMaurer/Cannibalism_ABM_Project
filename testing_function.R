@@ -46,6 +46,8 @@ datasmall %>%
   scale_color_manual(values = wes_palette("Zissou", 21, type = "continuous"))+
   theme_bw()
 
+## do something to average counts at each time point for each run in a given paramater value, then plot
+
   
 View(head(data_small))
   

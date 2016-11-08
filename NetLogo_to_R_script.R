@@ -34,27 +34,27 @@ colnames(fd1)[1:2] <- c("Inf_Death_Modifier", "type")
 fd1 <- as.data.frame(fd1)
 
 ## replace all the NAs for the values with the previous ones, since they only go every other.
-fd1[["Inf_Death_Modifier"]] <- na.locf(fd1[["Inf_Death_Modifier"]], fromLast = T)
+fd1["Inf_Death_Modifier"] <- na.locf(fd1["Inf_Death_Modifier"])
 
-## get rid of row with nothing in it
-fd2 <- fd1[-1,]
+
+
 
 ## create a Run column
-fd2$Run <- rownames(fd2)
+fd1$Run <- rownames(fd1)
 
 # make the run column just numbers
-fd2$Run <- gsub("\\.[0-9]*$", "", fd2$Run)
-fd2$Run <- gsub("X", "", fd2$Run)
-fd2$Run <- as.numeric(fd2$Run)
+fd1$Run <- gsub("\\.[0-9]*$", "", fd1$Run)
+fd1$Run <- gsub("X", "", fd1$Run)
+fd1$Run <- as.numeric(fd1$Run)
 
 # get rid of "count " from the type column
-fd2$type <- gsub("count\\s", "", fd2$type)
+fd1$type <- gsub("count\\s", "", fd1$type)
 
 # time to TIDY IT UP
-fd3 <- gather(fd2, Time, Count, 3:10003)
+fd2 <- gather(fd1, Time, Count, -(1:2))
 
 # arrange the data just so
-fd4 <- arrange(fd3, Run, fd3[,1], type, Time)
+fd3 <- arrange(fd2, Run, fd2[,1], type, Time)
 
 fd4$Run <- as.numeric(fd4$Run)
 fd4$type <- as.numeric(fd4$type)
