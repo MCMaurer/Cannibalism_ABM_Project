@@ -10,11 +10,11 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   
   
   ## get rid of the header portion, which doesn't have column titles, which messes stuff up
-  d <- read.csv(file = inputfile, skip = 6, stringsAsFactors = F, na.strings = "")
+  d <- read.csv(file = inputfile, skip = 6, na.strings = "")
   
   ## this deletes all the other rows of blah information
   d1 <- d[-rowstodelete8isNow1,]
-  
+
   ## change the rownames to a column called time, then subtract 29 to get it to start from 0
   d1$time <- rownames(d1)
   d1$time <- as.numeric(d1$time)
@@ -26,7 +26,7 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   
   ## flip the script!
   fd1 <- t(d1)
-  
+
   ## rename the first column and change whole thing to a dataframe
   colnames(fd1)[1:2] <- c(VariableChanged, "type")
   
@@ -35,9 +35,11 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   ## replace all the NAs for the values with the previous ones, since they only go every other.
   fd1[VariableChanged] <- na.locf(fd1[VariableChanged])
   
-  ## get rid of the VariableChanged entry in the time row
   fd1[,1] <- as.numeric(fd1[,1])
+  
   fd1[length(fd1[,1]),1] <- NA
+  fd1[length(fd1[,2]),2] <- NA
+  
   
   ## create a Run column
   fd1$Run <- rownames(fd1)
@@ -59,6 +61,5 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   fd3$Run <- as.numeric(fd3$Run)
   fd3$Time <- as.numeric(fd3$Time)
   fd3$Count <- as.numeric(fd3$Count)
-  fd3[,1] <- as.numeric(fd3[,1])
   return(fd3)
 }
