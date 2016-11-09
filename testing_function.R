@@ -53,9 +53,23 @@ datasmall %>%
 
 ## this could give a much cleaner plot
 
-  
-View(head(data_small))
-  
-?seq
 
-?geom_line
+
+datasmall_avg <- data %>% 
+  filter(grepl("[0]$", Time)) %>% 
+  group_by(Inf_Death_Modifier, type, Time) %>% 
+  summarise(avgCount = mean(Count)) 
+
+datasmall_avg$Time <- as.numeric(datasmall_avg$Time)
+datasmall_avg$avgCount <- as.numeric(datasmall_avg$avgCount)
+datasmall_avg$type <- as.factor(datasmall_avg$type)
+
+View(datasmall_avg)
+
+datasmall_avg %>% 
+  ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_Death_Modifier), colour=Inf_Death_Modifier, linetype=type))+
+  geom_line()+
+  #scale_x_continuous(breaks = seq(0, 10000, 1000))+
+  #scale_y_continuous(breaks = seq(0, 600, 50))+
+  #scale_color_manual(values = wes_palette("Zissou", 21, type = "continuous"))+
+  theme_bw()
