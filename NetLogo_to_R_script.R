@@ -8,21 +8,21 @@ library(zoo)
 
 
 ## get rid of the header portion, which doesn't have column titles, which messes stuff up
-d <- read.csv(file = "Github/Cannibalism_ABM_Project/Cannibalism_sensitivity_infected-death-modifier-spreadsheet.csv", skip = 6, na.strings = "")
+d <- read.csv(file = "Github/Cannibalism_ABM_Project/Cannibalism_inf_death_small.csv", skip = 6, na.strings = "")
 
-## this deletes all the other rows of blah information
-d1 <- d[-c(1, 3:27),]
+## this deletes all the other rows of blah information. Go to 27 for big file, 28 for small.csv
+d1 <- d[-c(1, 3:28),]
 
 View(d1)
 
 ## change the rownames to a column called time, then subtract 29 to get it to start from 0
-d1$time <- rownames(d1)
-d1$time <- as.numeric(d1$time)
-d1$time <- (d1$time - 29)
-d1$time[[1]] <- "inf_death_modifier"
-rownames(d1) <- d1$time
-d1$time <- as.numeric(d1$time)
-d1 <- d1[,-1]
+# d1$time <- rownames(d1)
+# d1$time <- as.numeric(d1$time)
+# d1$time <- (d1$time - 29)
+# d1$time[[1]] <- "inf_death_modifier"
+# rownames(d1) <- d1$time
+# d1$time <- as.numeric(d1$time)
+# d1 <- d1[,-1]
 
 
 ## flip the script!
@@ -30,8 +30,11 @@ fd1 <- t(d1)
 
 View(fd1)
 
+
+fd1 <- fd1[-1,]
+
 ## rename the first column and change whole thing to a dataframe
-colnames(fd1)[1:2] <- c("Inf_Death_Modifier", "type")
+colnames(fd1) <- c("Inf_Death_Modifier", "type", seq(1, (length(fd1[1,])-2), 1))
 
 fd1 <- as.data.frame(fd1)
 
@@ -40,8 +43,8 @@ fd1["Inf_Death_Modifier"] <- na.locf(fd1["Inf_Death_Modifier"])
 
 fd1$Inf_Death_Modifier <- as.numeric(fd1$Inf_Death_Modifier)
 
-fd1[length(fd1[,1]),1] <- NA
-fd1[length(fd1[,2]),2] <- NA
+# fd1[length(fd1[,1]),1] <- NA
+# fd1[length(fd1[,2]),2] <- NA
 
 
 ## create a Run column
