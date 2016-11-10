@@ -1,8 +1,3 @@
-## trying to write a function that will do the cleaning of netlogo data
-
-## TO DO: change it so that an argument is the name of the variable changing in the trials, and so it
-## gets referenced as fd2$VariableChanged
-
 CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   library(dplyr)
   library(tidyr)
@@ -17,7 +12,6 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
 
   ## flip the script!
   fd1 <- t(d1)
-
   fd1 <- fd1[-1,]
   
   ## rename the first column and change whole thing to a dataframe
@@ -45,6 +39,7 @@ CannNetLogoToR <- function (inputfile, rowstodelete8isNow1, VariableChanged){
   # arrange the data just so
   fd3 <- arrange(fd2, Run, fd2[,1], type, Time)
   
+  # make stuff numeric
   fd3$Run <- as.numeric(fd3$Run)
   fd3$Time <- as.numeric(fd3$Time)
   fd3$Count <- as.numeric(fd3$Count)
