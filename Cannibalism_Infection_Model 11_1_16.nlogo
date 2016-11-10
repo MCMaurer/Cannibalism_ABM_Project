@@ -1124,7 +1124,6 @@ NetLogo 5.2.0
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="10000"/>
-    <exitCondition>ticks &gt; 1800 and count infecteds = 0</exitCondition>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
     <enumeratedValueSet variable="infection-arrival-time">
@@ -1193,7 +1192,6 @@ NetLogo 5.2.0
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="10000"/>
-    <exitCondition>ticks &gt; 1800 and count infecteds = 0</exitCondition>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
     <enumeratedValueSet variable="infection-arrival-time">
@@ -1262,7 +1260,6 @@ NetLogo 5.2.0
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="10000"/>
-    <exitCondition>ticks &gt; 1800 and count infecteds = 0</exitCondition>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
     <enumeratedValueSet variable="infection-arrival-time">
