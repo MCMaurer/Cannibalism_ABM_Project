@@ -38,7 +38,7 @@ View(datasmall_avg)
 
 datasmall_avg %>% 
   ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_Death_Modifier), colour=Inf_Death_Modifier))+
-  geom_point(aes(alpha=0.2))+#, size=1/(2*n)))+
+  geom_line(aes(alpha=0.2))+#, size=1/(2*n)))+
   scale_x_continuous(breaks = seq(0, 10000, 1000))+
   scale_y_continuous(breaks = seq(0, 600, 50))+
   scale_color_manual(values = colorspace::diverge_hcl(n=21))+
@@ -63,7 +63,7 @@ View(datasmall_avg)
 
 data2small_avg %>% 
   ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_fecund_modifier), colour=Inf_fecund_modifier))+
-  geom_point(aes(alpha=0.2))+#, size=1/n))+
+  geom_line(aes(alpha=0.2))+#, size=1/n))+
   scale_x_continuous(breaks = seq(0, 10000, 1000))+
   scale_y_continuous(breaks = seq(0, 600, 50))+
   scale_color_manual(values = colorspace::diverge_hcl(n=21))+
