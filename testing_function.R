@@ -161,13 +161,13 @@ data5small_avg$Inf_cann_level <- as.numeric(data5small_avg$Inf_cann_level)
 
 data5small_avg %>% 
   #filter(Time <=3000) %>% 
-  filter(Inf_cann_level <= 20) %>% 
-  filter(Inf_cann_level >= 5) %>% 
+  filter(Inf_cann_level <= 70) %>% 
+  filter(Inf_cann_level >= 50) %>% 
   ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_cann_level), colour=Inf_cann_level, linetype=type))+
   geom_line()+#aes(alpha=0.9, size=(n/10)))+
   scale_x_continuous(breaks = seq(0, 10000, 1000))+
   scale_y_continuous(breaks = seq(0, 600, 50))+
-  scale_color_gradient2(low = "green", mid = "yellow", high = "red", midpoint = 12.5) + 
+  scale_color_gradient2(low = "green", mid = "yellow", high = "red", midpoint = 60) + 
   theme(plot.subtitle = element_text(vjust = 1), 
         plot.caption = element_text(vjust = 1), 
         axis.line = element_line(size = 0.2, 
@@ -196,15 +196,22 @@ p <- data5small_avg %>%
   #filter(Inf_cann_level <= 20) %>% 
   #filter(Inf_cann_level >= 5) %>% 
   ggplot(aes(x=Time, y=avgCount, colour=Inf_cann_level, linetype=type, frame=Inf_cann_level))+
-  geom_line()+
+  geom_point(aes(cumulative=TRUE, shape=type), cex=0.2)+
   scale_x_continuous(breaks = seq(0, 10000, 1000))+
   scale_y_continuous(breaks = seq(0, 600, 50))+
   scale_color_gradient2(low = "green", mid = "yellow", high = "red", midpoint = 50)+
   theme_few()
 
+gg_animate(p)
+
 library(ggthemes)
 setwd("/Users/MJ/")
 library(gganimate)
 pa <- gg_animate(p)
-gg_animate_save(pa, filename = "test.gif", saver = "gif")
+gg_animate_save(pa, filename = "~/GitHub/Cannibalism_ABM_Project/new_cann_level.gif", saver = "gif")
 ?gg_animate_save
+
+
+df <- data.frame(x = sample(100, replace = TRUE), y = runif(100))
+p <- ggplot(df, aes(x, y)) + geom_point(aes(frame = x, cumulative = TRUE))
+gg_animate(p, interval = 1)
