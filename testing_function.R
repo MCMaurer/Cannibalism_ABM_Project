@@ -88,13 +88,14 @@ data3small_avg$type <- as.factor(data3small_avg$type)
 data3small_avg$n <- as.numeric(data3small_avg$n)
 
 data3small_avg %>% 
+  filter(Time <=3000) %>% 
   ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_death_modifier), colour=Inf_death_modifier))+
   geom_line()+#aes(alpha=0.9, size=(n/10)))+
   scale_x_continuous(breaks = seq(0, 10000, 1000))+
   scale_y_continuous(breaks = seq(0, 600, 50))+
   scale_color_manual(values = colorspace::diverge_hcl(n=21))+
-  theme_bw()
-
+  theme_few()
+?theme_few
 
 ## maturation time now
 
@@ -116,12 +117,12 @@ data4small_avg$n <- as.numeric(data4small_avg$n)
 data4small_avg$maturation_time <- as.numeric(data4small_avg$maturation_time)
 
 data4small_avg %>% 
-  filter(Time <= 3000) %>% 
+  filter(Time <= 4000) %>% 
   ggplot(aes(x=Time, y=avgCount, group=interaction(type, maturation_time), colour=maturation_time, linetype=type))+
   geom_line()+#aes(alpha=0.9, size=(n/10)))+
   scale_x_continuous(breaks = seq(0, 10000, 1000))+
   scale_y_continuous(breaks = seq(0, 600, 50))+
-  scale_color_gradient2(low = "red", mid = "yellow", high = "green", midpoint = 300)+
+  scale_color_gradient2(low = "red", mid = "yellow", high = "green", midpoint = 275)+
   theme_bw()
 
 ?scale_color_gradient2
