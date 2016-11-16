@@ -89,12 +89,25 @@ data3small_avg$n <- as.numeric(data3small_avg$n)
 
 data3small_avg %>% 
   filter(Time <=3000) %>% 
-  ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_death_modifier), colour=Inf_death_modifier))+
+  ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_death_modifier), colour=Inf_death_modifier, linetype=type))+
   geom_line()+#aes(alpha=0.9, size=(n/10)))+
   scale_x_continuous(breaks = seq(0, 10000, 1000))+
   scale_y_continuous(breaks = seq(0, 600, 50))+
-  scale_color_manual(values = colorspace::diverge_hcl(n=21))+
-  theme_few()
+  scale_color_manual(values = colorspace::diverge_hcl(n=21)) + theme(plot.subtitle = element_text(vjust = 1), 
+    plot.caption = element_text(vjust = 1), 
+    axis.line = element_line(size = 0.2, 
+        linetype = "solid"), panel.grid.major = element_line(linetype = "blank"), 
+    panel.grid.minor = element_line(linetype = "blank"), 
+    axis.title = element_text(family = "mono"), 
+    axis.text = element_text(family = "mono"), 
+    legend.text = element_text(family = "mono"), 
+    legend.title = element_text(family = "mono"), 
+    panel.background = element_rect(fill = NA), 
+    legend.key = element_rect(fill = NA), 
+    legend.background = element_rect(fill = NA)) +labs(y = "# of Individuals", colour = "Viral Mortality Increase")+
+    theme(legend.title = element_text(size = 7)) + theme(legend.text = element_text(size = 6))
+  
+   theme_few()
 ?theme_few
 
 ## maturation time now
@@ -126,3 +139,120 @@ data4small_avg %>%
   theme_bw()
 
 ?scale_color_gradient2
+
+## inf-cann-level
+
+data5 <- CannNetLogoToR("/Users/MJ/GitHub/Cann_ABM_Outputs/inf-cann-level.csv", 
+                        c(1:7, 9:27), "Inf_cann_level")
+
+data5small_avg <- data5 %>% 
+  filter(grepl("[0]$", Time)) %>% 
+  group_by(Inf_cann_level, type, Time) %>% 
+  summarise(avgCount = mean(Count), variance=var(Count), stdev=sd(Count), n=n())
+
+
+data5small_avg$Time <- as.numeric(data5small_avg$Time)
+data5small_avg$avgCount <- as.numeric(data5small_avg$avgCount)
+data5small_avg$variance <- as.numeric(data5small_avg$variance)
+data5small_avg$stdev <- as.numeric(data5small_avg$stdev)
+data5small_avg$type <- as.factor(data5small_avg$type)
+data5small_avg$n <- as.numeric(data5small_avg$n)
+data5small_avg$Inf_cann_level <- as.numeric(data5small_avg$Inf_cann_level)
+
+data5small_avg %>% 
+  #filter(Time <=3000) %>% 
+  filter(Inf_cann_level <= 70) %>% 
+  filter(Inf_cann_level >= 50) %>% 
+  ggplot(aes(x=Time, y=avgCount, group=interaction(type, Inf_cann_level), colour=Inf_cann_level, linetype=type))+
+  geom_line()+#aes(alpha=0.9, size=(n/10)))+
+  scale_x_continuous(breaks = seq(0, 10000, 1000))+
+  scale_y_continuous(breaks = seq(0, 600, 50))+
+  scale_color_gradient2(low = "green", mid = "yellow", high = "red", midpoint = 60) + 
+  theme(plot.subtitle = element_text(vjust = 1), 
+        plot.caption = element_text(vjust = 1), 
+        axis.line = element_line(size = 0.2, 
+                                 linetype = "solid"), panel.grid.major = element_line(linetype = "blank"), 
+        panel.grid.minor = element_line(linetype = "blank"), 
+        axis.title = element_text(family = "mono"), 
+        axis.text = element_text(family = "mono"), 
+        legend.text = element_text(family = "mono"), 
+        legend.title = element_text(family = "mono"), 
+        panel.background = element_rect(fill = NA), 
+        legend.key = element_rect(fill = NA), 
+        legend.background = element_rect(fill = NA)) +labs(y = "# of Individuals", colour = "Inf Cann Level")+
+  theme(legend.title = element_text(size = 7)) + theme(legend.text = element_text(size = 6))
+
+## between cann values of 5 and 10, there is a qualitative switch. At 5, there are more infecteds than
+## uninfecteds, but at 10, it is reversed, and quite significantly. At 5, infecteds are stable at about
+## 180, uninf at 100, but at 10, inf are at about 120 and uninf at 180.
+
+
+## gonna try to animate some stuff
+
+devtools::install_github("dgrtwo/gganimate")
+
+p <- data5small_avg %>% 
+  #filter(Time <=3000) %>% 
+  #filter(Inf_cann_level <= 20) %>% 
+  #filter(Inf_cann_level >= 5) %>% 
+  ggplot(aes(x=Time, y=avgCount, colour=Inf_cann_level, linetype=type, frame=Inf_cann_level))+
+  geom_point(aes(cumulative=TRUE, shape=type), cex=0.2)+
+  scale_x_continuous(breaks = seq(0, 10000, 1000))+
+  scale_y_continuous(breaks = seq(0, 600, 50))+
+  scale_color_gradient2(low = "green", mid = "yellow", high = "red", midpoint = 50)+
+  theme_few()
+
+gg_animate(p)
+
+library(ggthemes)
+setwd("/Users/MJ/")
+library(gganimate)
+pa <- gg_animate(p)
+gg_animate_save(pa, filename = "~/GitHub/Cannibalism_ABM_Project/new_cann_level.gif", saver = "gif")
+?gg_animate_save
+
+
+df <- data.frame(x = sample(100, replace = TRUE), y = runif(100))
+p <- ggplot(df, aes(x, y)) + geom_point(aes(frame = x, cumulative = TRUE))
+gg_animate(p, interval = 1)
+
+## overall fecundity
+
+data6 <- CannNetLogoToR("/Users/MJ/GitHub/Cann_ABM_Outputs/current_exp4_output2016_11_15_10:45:20.csv", 
+                        c(1:18, 20:27), "fecundity")
+
+data6small_avg <- data6 %>% 
+  filter(grepl("[0]$", Time)) %>% 
+  group_by(fecundity, type, Time) %>% 
+  summarise(avgCount = mean(Count), variance=var(Count), stdev=sd(Count), n=n())
+
+
+data6small_avg$Time <- as.numeric(data6small_avg$Time)
+data6small_avg$avgCount <- as.numeric(data6small_avg$avgCount)
+data6small_avg$variance <- as.numeric(data6small_avg$variance)
+data6small_avg$stdev <- as.numeric(data6small_avg$stdev)
+data6small_avg$type <- as.factor(data6small_avg$type)
+data6small_avg$n <- as.numeric(data6small_avg$n)
+data6small_avg$fecundity <- as.numeric(data6small_avg$fecundity)
+
+data6small_avg %>% 
+  filter(Time <=2000) %>% 
+  ggplot(aes(x=Time, y=avgCount, group=interaction(type, fecundity), colour=fecundity, linetype=type))+
+  geom_line()+
+  scale_x_continuous(breaks = seq(0, 10000, 1000))+
+  scale_y_continuous(breaks = seq(0, 600, 50))+
+  scale_color_gradient2(low = "green", mid = "yellow", high = "red", midpoint = 10) + 
+  theme(plot.subtitle = element_text(vjust = 1), 
+        plot.caption = element_text(vjust = 1), 
+        axis.line = element_line(size = 0.2, 
+                                 linetype = "solid"), panel.grid.major = element_line(linetype = "blank"), 
+        panel.grid.minor = element_line(linetype = "blank"), 
+        axis.title = element_text(family = "mono"), 
+        axis.text = element_text(family = "mono"), 
+        legend.text = element_text(family = "mono"), 
+        legend.title = element_text(family = "mono"), 
+        panel.background = element_rect(fill = NA), 
+        legend.key = element_rect(fill = NA), 
+        legend.background = element_rect(fill = NA)) +labs(y = "# of Individuals", colour = "fecundity")+
+  theme(legend.title = element_text(size = 7)) + theme(legend.text = element_text(size = 6))
+
