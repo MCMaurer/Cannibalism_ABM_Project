@@ -215,3 +215,44 @@ gg_animate_save(pa, filename = "~/GitHub/Cannibalism_ABM_Project/new_cann_level.
 df <- data.frame(x = sample(100, replace = TRUE), y = runif(100))
 p <- ggplot(df, aes(x, y)) + geom_point(aes(frame = x, cumulative = TRUE))
 gg_animate(p, interval = 1)
+
+## overall fecundity
+
+data6 <- CannNetLogoToR("/Users/MJ/GitHub/Cann_ABM_Outputs/current_exp4_output2016_11_15_10:45:20.csv", 
+                        c(1:18, 20:27), "fecundity")
+
+data6small_avg <- data6 %>% 
+  filter(grepl("[0]$", Time)) %>% 
+  group_by(fecundity, type, Time) %>% 
+  summarise(avgCount = mean(Count), variance=var(Count), stdev=sd(Count), n=n())
+
+
+data6small_avg$Time <- as.numeric(data6small_avg$Time)
+data6small_avg$avgCount <- as.numeric(data6small_avg$avgCount)
+data6small_avg$variance <- as.numeric(data6small_avg$variance)
+data6small_avg$stdev <- as.numeric(data6small_avg$stdev)
+data6small_avg$type <- as.factor(data6small_avg$type)
+data6small_avg$n <- as.numeric(data6small_avg$n)
+data6small_avg$fecundity <- as.numeric(data6small_avg$fecundity)
+
+data6small_avg %>% 
+  filter(Time <=2000) %>% 
+  ggplot(aes(x=Time, y=avgCount, group=interaction(type, fecundity), colour=fecundity, linetype=type))+
+  geom_line()+
+  scale_x_continuous(breaks = seq(0, 10000, 1000))+
+  scale_y_continuous(breaks = seq(0, 600, 50))+
+  scale_color_gradient2(low = "green", mid = "yellow", high = "red", midpoint = 10) + 
+  theme(plot.subtitle = element_text(vjust = 1), 
+        plot.caption = element_text(vjust = 1), 
+        axis.line = element_line(size = 0.2, 
+                                 linetype = "solid"), panel.grid.major = element_line(linetype = "blank"), 
+        panel.grid.minor = element_line(linetype = "blank"), 
+        axis.title = element_text(family = "mono"), 
+        axis.text = element_text(family = "mono"), 
+        legend.text = element_text(family = "mono"), 
+        legend.title = element_text(family = "mono"), 
+        panel.background = element_rect(fill = NA), 
+        legend.key = element_rect(fill = NA), 
+        legend.background = element_rect(fill = NA)) +labs(y = "# of Individuals", colour = "fecundity")+
+  theme(legend.title = element_text(size = 7)) + theme(legend.text = element_text(size = 6))
+
