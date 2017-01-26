@@ -8,10 +8,10 @@ library(zoo)
 
 
 ## get rid of the header portion, which doesn't have column titles, which messes stuff up
-d <- read.csv(file = "Github/Cannibalism_ABM_Project/Cannibalism_inf_death_small.csv", skip = 6, na.strings = "")
+d <- read.csv(file = "/Users/MJ/Github/Cann_ABM_Outputs/movementodds.csv", skip = 6, na.strings = "")
 
 ## this deletes all the other rows of blah information. Go to 27 for big file, 28 for small.csv
-d1 <- d[-c(1, 3:28),]
+d1 <- d[-c(1:4, 6:27),]
 
 View(d1)
 
