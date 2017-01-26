@@ -1,0 +1,17 @@
+First thoughts:
+
+Several variables seem to affect the max pop density or the inherent growth rate of the population, allowing the infection to take hold pretty strongly. These include: maturation time, fecundity, and death odds. However, some lead to stability with the infection at higher levels than uninfecteds, whereas some lead to tight cycles, with infection closely following uninfected spikes.
+
+
+
+death_odds: too high, nothing survives. at 1, virus present at lower levels than uninfected. At 0, this is flipped. However, at 0.5, there are tight cycles, where uninfecteds go up, then infecteds go up as uninfecteds crash. This range seems safe though.
+
+movement_odds: intermediate values best for virus, too high or too low, it can't stick around. ~5 seems best
+
+infectious_level: as it goes up, virus is able to stick around, uninfecteds go lower and have a bit more fluctuation. 50-100 safe
+
+inf-mortality-modifier: opposite sort of effect as infectious_level. As this goes up, uninfecteds get higher and fluctuate less, infection goes lower and eventually drops out. 0 to 0.5 should be safe
+
+maturation_time: lower leads to higher inf than un, higher leads to inf dropping out, then eventually to both dropping out. 25-125 stable though
+
+fecundity: 7.5 is about the lowest you can go while having the infection present stably. Once you get up to about 15, you get cycles going. Up to 20, the cycles just seem to get tighter.

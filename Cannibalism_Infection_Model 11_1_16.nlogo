@@ -360,7 +360,7 @@ maturation-time
 maturation-time
 0
 200
-124
+25
 1
 1
 NIL
@@ -599,7 +599,7 @@ inf-fecund-modifier
 inf-fecund-modifier
 -20
 20
-0
+-1
 .1
 1
 NIL
@@ -1259,6 +1259,74 @@ NetLogo 5.2.0
   <experiment name="sensitivity_maturation-time" repetitions="20" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
+    <timeLimit steps="10000"/>
+    <metric>count uninfecteds</metric>
+    <metric>count infecteds</metric>
+    <enumeratedValueSet variable="infection-arrival-time">
+      <value value="1700"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="inf-death-modifier">
+      <value value="0.3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="juv-death-odds">
+      <value value="1.2"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="juv-move-modifier">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="MovementOdds">
+      <value value="3"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="vert-trans-odds">
+      <value value="66"/>
+    </enumeratedValueSet>
+    <steppedValueSet variable="maturation-time" first="25" step="25" last="500"/>
+    <enumeratedValueSet variable="inf-cannibalism-level">
+      <value value="80"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="infectious-level">
+      <value value="60"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="inf-juv-death-modifier">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-number-uninfecteds">
+      <value value="220"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="death-odds">
+      <value value="1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="inf-mature-modifier">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="inf-fecund-modifier">
+      <value value="-1"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="vertical-transmission">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="cannibalism-level">
+      <value value="0.75"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="infect-at-tick">
+      <value value="false"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="initial-number-infecteds">
+      <value value="25"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="fecundity">
+      <value value="8"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="can-move-modifier">
+      <value value="0"/>
+    </enumeratedValueSet>
+    <enumeratedValueSet variable="uninfected-cannibalize?">
+      <value value="false"/>
+    </enumeratedValueSet>
+  </experiment>
+  <experiment name="sensitivity_maturation-time_FAST" repetitions="20" runMetricsEveryStep="true">
+    <setup>setup</setup>
+    <go>repeat 10 [ go ]</go>
     <timeLimit steps="10000"/>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
