@@ -61,7 +61,7 @@ inf_cann7 %>%
 ## try plotting both together
 par(mar=c(5,3,4,3))
 plot(inf_cann7$inf_cannibalism,inf_cann7$mean_total_pop,type="l",xlab="infected cannibalism rate",
-     ylab=NA, title="20 runs at each cannibalism rate; mean pop/inf rate for last 5000 time steps")
+     ylab=NA, main="mean for last 5000 time steps, 20 runs")
 mtext(side=2,line=2,"mean total population size")
 par(new=T)
 plot(inf_cann7$inf_cannibalism,inf_cann6$mean_inf_perc,type="l",axes=F,xlab=NA,ylab=NA,col="blue")
