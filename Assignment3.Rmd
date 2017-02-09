@@ -1,0 +1,80 @@
+---
+title: "ECL 233 Assignment 3"
+author: "Michael Culshaw-Maurer"
+date: "1/26/2017"
+output: html_document
+---
+
+Read in the teasel data:
+```{r}
+TS <- as.matrix(read.table("/Users/MJ/GitHub/ECL_233/teasel_stage.txt"))
+```
+
+
+Define a function for creating the projection matrix with values of a and f. I modified mine to include an input for f.
+```{r}
+A2 <- function(N,f){
+  A.temp=TS;
+  A.temp[1,7]=f/(1+a*sum(N));
+  return(A.temp)
+}
+```
+
+
+Time to figure out eigenvalues for the linearization of the model.
+```{r}
+a <- 0 # we're doing the linearization, so this gets rid of density dependence
+f <- 0:75
+eigenvalues <- rep(NA,length(f)) # make an eigenvalues vector of the right length
+
+for(b in f){
+  eigenvalues[b+1] <- Re(eigen(A2(0,b))$values[1])
+}
+# I used n0 into the A2 function since it still needs a population state vector as an input. However, it isn't taken into account in the linearization since a=0. The vector could really be anything, it just needs to still be an input.
+```
+
+
+Plot it up:
+```{r}
+length(eigenvalues) # check the length to be sure
+plot(f,eigenvalues,type="p", xlab="f",ylab="dominant eigenvalue") # plot eigenvalues against f
+abline(h=1,lty=2,col="red") # add a dashed red line at eigenvalue of 1
+```
+
+
+Time to look at the stable population size given different f values.
+
+First, let's create an array of matrices (one for each f value):
+```{r}
+a=0.01
+f <- 0:75
+tf <- 500
+nstg <- ncol(TS) # number of stages in the matrix
+n0 <- c(2,rep(0,nstg-1)) # initial population vector
+Ntf <- array(NA,c(length(f),nstg,tf)) # create an array of length(f) matrices
+for(a in 1:length(f)) Ntf[a,,1] <- n0 # populate the array of matrices with the starting vector
+```
+
+
+Now, we run two for-loops to iterate across f values and through time:
+```{r}
+for(t in 1:(tf-1)){ # iterate across time
+  for(b in f){ # iterate across f values
+    Ntf[b+1,,t+1] <- A2(Ntf[b+1,,t],f=b)%*%Ntf[b+1,,t] # advance one time step, put it in the array entry matching to the value of f we're using, plus 1. This is because the first array entry is f=0, the second is f=1, etc.
+  }
+}
+```
+
+
+Now, plot it out:
+```{r}
+totals <- rep(NA,length(Ntf[,1,1])) # create a vector of the equilibrium pop size for each f value
+for(i in 1:length(Ntf[,1,1])){ # calculate the total pop at the 500th time step for each f value
+  totals[i] <- sum(Ntf[i,,500])
+}
+
+plot(1:length(totals),totals,type="p", xlab="f",ylab="stable pop size") # plot totals out
+
+
+```
+
