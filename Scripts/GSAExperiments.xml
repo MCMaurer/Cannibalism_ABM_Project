@@ -1,0 +1,512 @@
+<experiments>
+<experiment name="Test1" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="39.21"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="14.04"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="1.84"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="58.44"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="25.4"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="85.11"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="9.06"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="22.38"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="28.1"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="52.35"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="9.91"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="85.97"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="66.44"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="6.9"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test2" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="5.05"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="21.84"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="7.71"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="26.52"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="91.27"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="109.36"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="1.35"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="65.19"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="5.02"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="72.87"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="3.4"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="16.11"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="156.57"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="2.71"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test3" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="29.95"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="76.05"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="4.69"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="30.01"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="62.11"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="173"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="0.7"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="95.26"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="76.17"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="8.06"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="5.53"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="79.24"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="80.49"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="0.2"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test4" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="76.23"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="58.11"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="2.39"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="8.16"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="54.55"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="14.77"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="8.35"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="54.2"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="44.25"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="69.11"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="7.22"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="22.43"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="19.25"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="7.64"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test5" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="64.97"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="32.71"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="3.74"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="97.05"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="37.66"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="68.34"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="5.01"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="72.61"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="55.64"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="87.88"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="0.22"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="42.6"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="119.27"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="5.88"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test6" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="51.57"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="43.4"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="9.67"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="40.56"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="77.6"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="140.5"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="3.22"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="7.8"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="31.24"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="14.77"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="2.77"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="97.76"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="184.66"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="9.95"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test7" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="15.91"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="0.21"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="5.76"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="69.41"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="43.82"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="193.25"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="2.2"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="81.58"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="82.7"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="46.57"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="4.66"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="57.75"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="22.43"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="3.9"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test8" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="99.34"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="92.2"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="0.49"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="80.76"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="6.92"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="137.22"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="7.78"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="35.85"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="61.1"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="21.57"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="8.68"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="34.09"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="176.82"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="8.89"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test9" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="45.17"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="65.67"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="8.69"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="10.98"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="85.43"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="42.55"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="4.65"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="47.19"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="11.17"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="36.51"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="6.98"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="8.77"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="135.44"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="4.93"/>
+	</enumeratedValueSet>
+</experiment>
+<experiment name="Test10" repetitions="1" runMetricsEveryStep="true">
+	<setup>setup</setup>
+	<go>go</go>
+	<timeLimit steps="10000"/>
+	<metric>count uninfecteds</metric>
+	<metric>count infecteds</metric>
+	<metric>count juveniles</metric>
+	<metric>count inf-juveniles</metric>
+	<enumeratedValueSet variable="initial_number_uninfecteds">
+		<value value="82.63"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="initial_number_infecteds">
+		<value value="80.2"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="cannibalism_level">
+		<value value="6.97"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_cannibalism_level">
+		<value value="71.45"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="infectious_level">
+		<value value="10.95"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="maturation_time">
+		<value value="27.72"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="death_odds">
+		<value value="6.85"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="movement_odds">
+		<value value="15.97"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="can_move_odds">
+		<value value="98.43"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_move_odds">
+		<value value="90.76"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="juv_death_odds">
+		<value value="1.45"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="vert_trans_odds">
+		<value value="69.61"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_mature_time">
+		<value value="53.31"/>
+	</enumeratedValueSet>
+	<enumeratedValueSet variable="inf_death_odds">
+		<value value="1.42"/>
+	</enumeratedValueSet>
+</experiment>
+</experiments>

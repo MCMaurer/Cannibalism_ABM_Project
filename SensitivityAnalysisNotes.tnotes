@@ -1,0 +1,47 @@
+--- ABM Modeling Experiments ---
+
+# will Random Forest approach work for a global sensitivity analysis
+# Actually, check EcoSphere paper for GSA methods for stochastic models
+
+1) Latin hypercube sampling of parameter space
+2) Single simulation of 10,000 ticks for each parameter set !be sure to make NetLogo only record data for last ~2000 time steps, or something else to reduce amt of data collected
+3) Boosted regression tree that includes first-order interaction terms
+4) Determine most important parameters, including interactions, and do standard multi-simulation "experiments" as done previously, in order to more uniformly sample that parameter space and produce plots
+
+
+1) Baseline cannibalism vs. diseased cannibalism
+2) Cannibalism and transmission (horizontal vs. environmental)
+3) 
+
+
+
+--- Steps for GSA ---
+
+1) Generate a number of parameter samples using Latin Hypercube- just need to do this once, store them in a file
+2) Write an XML doc that contains the experimental setup
+3) Create a number of experiments for each different parameter set, two ways to do this:
+	- create a single experiment in the XML file, but then write a Python file that will modify that file with a new set of parameter values
+	- create all of the experiments in the XML file, written by repeating the same basic format but looping through parameter value sets
+4) Write script that will run NetLogo headless simulations through that XML file, also depends on the two options for Step 3:
+	- for a single experiment that gets changed, changing the parameter set will have to be done BETWEEN each NetLogo run
+	- for all the experiments in one file, the NetLogo shell script would just have to be looped through each different experiment in there
+5) I think the shell script will create a .csv for each experimental run, so I'll have to be careful to name them properly so that I can run an R function that will loop through all of them, read them in and append them to one big data set
+	- on this note, I should look at the R script for the 2016 EcoSphere paper to get a sense of how their data are structured before going into BRT
+
+
+This goes over how to properly append text to an existing file. I think this could be a good way to use Python to iteratively create each experiment in the XML file:
+	https://stackoverflow.com/questions/10640804/how-to-add-lines-to-existing-file-using-python
+	- should experiment with generating files using for loops in Python, gotta make sure spacing/line breaks can be done properly
+
+The XML info is below:
+https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html
+
+Stuff on looping in a shell script:
+https://stackoverflow.com/questions/1445452/shell-script-for-loop-syntax
+
+! Figure out if I can get a Python script that will run the command line code:
+https://stackoverflow.com/questions/450285/executing-command-line-programs-from-within-python
+
+
+
+## might make more sense to write individual XML files because I can then have NetLogo run on multiple cores, each doing a different subset of XML files
