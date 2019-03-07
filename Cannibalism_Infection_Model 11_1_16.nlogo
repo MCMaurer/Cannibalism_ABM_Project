@@ -1,4 +1,4 @@
-breed [infecteds infected]  
+breed [infecteds infected]
 breed [uninfecteds uninfected]
 breed [juveniles juvenile]
 breed [inf-juveniles inf-juvenile]
@@ -9,74 +9,77 @@ inf-juveniles-own [development-level]
 to setup
   clear-all
   set-default-shape turtles "square"
-  create-uninfecteds initial-number-uninfecteds
-    [ set color yellow   
-      setxy random-pxcor random-pycor 
+  create-uninfecteds initial_number_uninfecteds
+    [ set color yellow
+      setxy random-pxcor random-pycor
       ]
-  create-infecteds initial-number-infecteds 
-    [ set color red 
+  create-infecteds initial_number_infecteds
+    [ set color red
       setxy random-pxcor random-pycor ]
   set-default-shape juveniles "dot"
   set-default-shape inf-juveniles "dot"
   reset-ticks
-  
-  
+
+
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 to go
-  ask uninfecteds [move]
-  if uninfected-cannibalize? [ask uninfecteds [cannibalize]]
-  ask uninfecteds [reproduce]
   ask uninfecteds [death]
-  
+  ask uninfecteds [move]
+  if uninfected_cannibalize [ask uninfecteds [cannibalize]]
+  ask uninfecteds [reproduce]
+
+  ask infecteds [inf-death]
   ask infecteds [can-move]
   ask infecteds [infected-cannibalize]
-  ifelse vertical-transmission [ask infecteds [inf-reproduce]]
+  ifelse vertical_transmission [ask infecteds [inf-reproduce]]
      [ask infecteds [reproduce]]
   ask infecteds [infect]
-  ask infecteds [inf-death]
-  
+
+  ask juveniles [juv-death]
+  ask juveniles [mature]
   ask juveniles [juv-move]
   ask juveniles [set development-level development-level + 1]
-  ask juveniles [mature]
-  ask juveniles [juv-death]
-  
+
+
+  ask inf-juveniles [inf-juv-death]
+  ask inf-juveniles [inf-mature]
   ask inf-juveniles [juv-move]
   ask inf-juveniles [set development-level development-level + 1]
-  ask inf-juveniles [inf-mature]
-  ask inf-juveniles [inf-juv-death]
 
-  
+
+
+
   tick
-  
-  if infect-at-tick [run [timed-start-infection]]
+
+  if infect_at_tick [run [timed-start-infection]]
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 to timed-start-infection
-  if ticks = infection-arrival-time [create-infecteds 1 [set color red setxy random-pxcor random-pycor]]
+  if ticks = infection_arrival_time [create-infecteds 1 [set color red setxy random-pxcor random-pycor]]
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 to death
-  ;;if random death-odds = 0 [die]
-  if random-float 100 < death-odds [die]
+  ;;if random death_odds = 0 [die]
+  if random-float 100 < death_odds [die]
 end
 
 to inf-death
-  if random-float 100 < death-odds + inf-death-modifier [die]
+  if random-float 100 < death_odds + inf_death_modifier [die]
 end
 
 to juv-death
-  if random-float 100 < juv-death-odds [die]
+  if random-float 100 < juv_death_odds [die]
 end
 
 to inf-juv-death
-  if random-float 100 < death-odds + inf-juv-death-modifier [die]
+  if random-float 100 < death_odds + inf_juv_death_modifier [die]
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -89,15 +92,15 @@ end
 ;; Different movement levels for uninfecteds, infecteds, and juveniles
 
 to move
-  if random-float 100 < MovementOdds [setxy xcor + random 2 - random 2 ycor + random 2 - random 2]
+  if random-float 100 < movement_odds [setxy xcor + random 2 - random 2 ycor + random 2 - random 2]
 end
 
 to can-move
-  if random-float 100 < (MovementOdds + can-move-modifier) [setxy xcor + random 2 - random 2 ycor + random 2 - random 2]
+  if random-float 100 < (movement_odds + can_move_modifier) [setxy xcor + random 2 - random 2 ycor + random 2 - random 2]
 end
 
 to juv-move
-  if random-float 100 < (MovementOdds + juv-move-modifier) [setxy xcor + random 2 - random 2 ycor + random 2 - random 2]
+  if random-float 100 < (movement_odds + juv_move_modifier) [setxy xcor + random 2 - random 2 ycor + random 2 - random 2]
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -106,20 +109,20 @@ end
 ;; Different levels for uninfecteds and infecteds
 
 to cannibalize
-  
+
 let prey one-of turtles-here with [shape = "dot"]
   if prey != nobody [
-  if random-float 100 < (cannibalism-level * ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))
+  if random-float 100 < (cannibalism_level * ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))
     [ ask prey [ die ]]]
 end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 to infected-cannibalize
-  
+
   let prey one-of turtles-here with [shape = "dot"]
   if prey != nobody [
-  if random-float 100 < inf-cannibalism-level [
+  if random-float 100 < inf_cannibalism_level [
      ask prey [ die ]]]
 end
 
@@ -129,11 +132,11 @@ end
 
 ;; is the one-of a problem here?
 
-to infect 
-  
+to infect
+
   let infectee one-of uninfecteds-on neighbors
   if infectee != nobody
-  [if random-float 1000 < infectious-level * (count uninfecteds-on neighbors) ;; this scales UP with how many uninfecteds-on neighbors there are.
+  [if random-float 1000 < infectious_level * (count uninfecteds-on neighbors) ;; this scales UP with how many uninfecteds-on neighbors there are.
     ;; it's sort of a workaround for the random selection of one-of the neighbors to be called infectee. Basically, if you have 8 neighbors,
     ;; it's 8x more likely that the one that gets selected gets infected, which mathematically works out to the same thing as all 8 of them having
     ;; some small chance of becoming infected
@@ -154,17 +157,17 @@ end
 
 to inf-reproduce
   ifelse (((count uninfecteds-on neighbors) + (count infecteds-on neighbors)) != 0)
-    [if random-float 100 < (fecundity + inf-fecund-modifier) * (1 / ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))
-      [ifelse random-float 100 < vert-trans-odds
+    [if random-float 100 < (fecundity + inf_fecund_modifier) * (1 / ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))
+      [ifelse random-float 100 < vert_trans_odds
         [hatch-inf-juveniles 1 [set color magenta]]
         [hatch-juveniles 1 [set color pink]]]]
-    [if random-float 100 < (fecundity + inf-fecund-modifier)
-      [ifelse random-float 100 < vert-trans-odds
+    [if random-float 100 < (fecundity + inf_fecund_modifier)
+      [ifelse random-float 100 < vert_trans_odds
         [hatch-inf-juveniles 1 [set color magenta]]
         [hatch-juveniles 1 [set color pink]]]]
-  
+
   ;if random-float 100 < 100 * (2 / ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))[
-  ;ifelse random-float 100 < vert-trans-odds
+  ;ifelse random-float 100 < vert_trans_odds
   ;[hatch-inf-juveniles 1 [set color magenta]]
   ;[hatch-juveniles 1 [set color pink]]]
 end
@@ -172,7 +175,7 @@ end
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 to mature
-  if development-level >= maturation-time [
+  if development-level >= maturation_time [
   hatch-uninfecteds 1 [set color yellow] die ]
   ;; nymphs reach reproductive age
 end
@@ -180,7 +183,7 @@ end
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 to inf-mature
-  if development-level >= maturation-time + inf-mature-modifier [
+  if development-level >= maturation_time + inf_mature_modifier [
   hatch-infecteds 1 [set color red] die ]
   ;; nymphs reach reproductive age
 end
@@ -193,11 +196,11 @@ end
 ;; Different levels for uninfecteds and infecteds
 
 to density-cannibalize
-  
-  
+
+
   let prey one-of turtles-here with [shape = "dot"]
   if prey != nobody [
-  if random-float 100 < (cannibalism-level * ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))
+  if random-float 100 < (cannibalism_level * ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))
   ;;[if random (100 - (0 * ((count uninfecteds-on neighbors) + (count infecteds-on neighbors)))) = 0
     [ ask prey [ die ]]]
 end
@@ -207,10 +210,10 @@ end
 GRAPHICS-WINDOW
 610
 92
-1050
-553
-16
-16
+1048
+531
+-1
+-1
 13.030303030303031
 1
 10
@@ -236,11 +239,11 @@ SLIDER
 49
 226
 82
-initial-number-uninfecteds
-initial-number-uninfecteds
+initial_number_uninfecteds
+initial_number_uninfecteds
 0
 300
-220
+220.0
 1
 1
 NIL
@@ -285,11 +288,11 @@ SLIDER
 87
 226
 120
-initial-number-infecteds
-initial-number-infecteds
+initial_number_infecteds
+initial_number_infecteds
 0
 100
-25
+25.0
 1
 1
 NIL
@@ -300,11 +303,11 @@ SLIDER
 48
 446
 81
-cannibalism-level
-cannibalism-level
+cannibalism_level
+cannibalism_level
 0
-3
-0.75
+10
+0.4
 0.05
 1
 NIL
@@ -315,11 +318,11 @@ SLIDER
 88
 446
 121
-inf-cannibalism-level
-inf-cannibalism-level
+inf_cannibalism_level
+inf_cannibalism_level
 0
 100
-80
+80.0
 1
 1
 NIL
@@ -330,11 +333,11 @@ SLIDER
 126
 448
 159
-infectious-level
-infectious-level
+infectious_level
+infectious_level
 0
 100
-60
+60.0
 1
 1
 NIL
@@ -345,9 +348,9 @@ SWITCH
 10
 446
 43
-uninfected-cannibalize?
-uninfected-cannibalize?
-1
+uninfected_cannibalize
+uninfected_cannibalize
+0
 1
 -1000
 
@@ -356,11 +359,11 @@ SLIDER
 126
 226
 159
-maturation-time
-maturation-time
+maturation_time
+maturation_time
 0
 200
-25
+25.0
 1
 1
 NIL
@@ -371,11 +374,11 @@ SLIDER
 165
 225
 198
-death-odds
-death-odds
+death_odds
+death_odds
 0
 10
-1
+1.0
 .1
 1
 NIL
@@ -386,11 +389,11 @@ SLIDER
 245
 226
 278
-MovementOdds
-MovementOdds
+movement_odds
+movement_odds
 0
 100
-3
+3.0
 1
 1
 NIL
@@ -401,11 +404,11 @@ SLIDER
 283
 226
 316
-can-move-modifier
-can-move-modifier
+can_move_modifier
+can_move_modifier
 -50
 50
-0
+0.0
 1
 1
 NIL
@@ -416,11 +419,11 @@ SLIDER
 324
 225
 357
-juv-move-modifier
-juv-move-modifier
+juv_move_modifier
+juv_move_modifier
 -50
 50
-0
+0.0
 1
 1
 NIL
@@ -431,8 +434,8 @@ SLIDER
 204
 224
 237
-juv-death-odds
-juv-death-odds
+juv_death_odds
+juv_death_odds
 0
 5
 1.2
@@ -446,8 +449,8 @@ SWITCH
 11
 645
 44
-infect-at-tick
-infect-at-tick
+infect_at_tick
+infect_at_tick
 1
 1
 -1000
@@ -457,11 +460,11 @@ SLIDER
 49
 645
 82
-infection-arrival-time
-infection-arrival-time
+infection_arrival_time
+infection_arrival_time
 0
 10000
-1700
+1700.0
 100
 1
 NIL
@@ -472,8 +475,8 @@ SWITCH
 10
 847
 43
-vertical-transmission
-vertical-transmission
+vertical_transmission
+vertical_transmission
 1
 1
 -1000
@@ -483,11 +486,11 @@ SLIDER
 49
 847
 82
-vert-trans-odds
-vert-trans-odds
+vert_trans_odds
+vert_trans_odds
 0
 100
-66
+66.0
 1
 1
 NIL
@@ -535,11 +538,11 @@ SLIDER
 165
 450
 198
-inf-mature-modifier
-inf-mature-modifier
+inf_mature_modifier
+inf_mature_modifier
 -100
 100
-0
+0.0
 1
 1
 NIL
@@ -550,11 +553,11 @@ SLIDER
 203
 405
 236
-inf-death-modifier
-inf-death-modifier
+inf_death_modifier
+inf_death_modifier
 0
 10
-0.3
+0.4
 .1
 1
 NIL
@@ -565,11 +568,11 @@ SLIDER
 241
 428
 274
-inf-juv-death-modifier
-inf-juv-death-modifier
+inf_juv_death_modifier
+inf_juv_death_modifier
 0
 100
-0
+73.0
 1
 1
 NIL
@@ -584,7 +587,7 @@ fecundity
 fecundity
 0
 20
-8
+8.0
 .1
 1
 NIL
@@ -595,11 +598,11 @@ SLIDER
 320
 413
 353
-inf-fecund-modifier
-inf-fecund-modifier
+inf_fecund_modifier
+inf_fecund_modifier
 -20
 20
--1
+-1.0
 .1
 1
 NIL
@@ -620,14 +623,14 @@ Initial values that seem to be somewhat stable:
 Initial uninfecteds: 50
 Initial uninfecteds: 20
 Maturation time: 159
-Death-odds: 100
-Uninfected-cannibalize?: on
-Cannibalism-level: 20
-Inf-cannibalism-level: 90
-Infectious-level: 70
+death_odds: 100
+uninfected_cannibalize: on
+cannibalism_level: 20
+inf_cannibalism_level: 90
+infectious_level: 70
 Movement-odds: 10
-Can-move-modifier: 5
-Juv-move-modifier: .5
+can_move_modifier: 5
+juv_move_modifier: .5
 
 ## THINGS TO NOTICE
 
@@ -963,9 +966,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.2.0
+NetLogo 6.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -978,91 +980,91 @@ NetLogo 5.2.0
     <metric>count juveniles</metric>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
-    <enumeratedValueSet variable="can-move-modifier">
+    <enumeratedValueSet variable="can_move_modifier">
       <value value="7.5"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infectious-level">
+    <enumeratedValueSet variable="infectious_level">
       <value value="70"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-move-modifier">
+    <enumeratedValueSet variable="juv_move_modifier">
       <value value="0.5"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-cannibalism-level">
+    <enumeratedValueSet variable="inf_cannibalism_level">
       <value value="90"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-uninfecteds">
+    <enumeratedValueSet variable="initial_number_uninfecteds">
       <value value="70"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="movement-odds">
       <value value="10"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="death-odds">
+    <enumeratedValueSet variable="death_odds">
       <value value="100"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="cannibalism-level">
+    <enumeratedValueSet variable="cannibalism_level">
       <value value="20"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="maturation-time">
+    <enumeratedValueSet variable="maturation_time">
       <value value="159"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-infecteds">
+    <enumeratedValueSet variable="initial_number_infecteds">
       <value value="30"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="uninfected-cannibalize?">
+    <enumeratedValueSet variable="uninfected_cannibalize">
       <value value="false"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="ChangeMovementOdds" repetitions="20" runMetricsEveryStep="true">
+  <experiment name="Changemovement_odds" repetitions="20" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="9000"/>
     <exitCondition>ticks &gt; 1800 and count infecteds = 0</exitCondition>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
-    <enumeratedValueSet variable="initial-number-infecteds">
+    <enumeratedValueSet variable="initial_number_infecteds">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="maturation-time">
+    <enumeratedValueSet variable="maturation_time">
       <value value="168"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-move-modifier">
+    <enumeratedValueSet variable="juv_move_modifier">
       <value value="0.5"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="can-move-modifier">
+    <enumeratedValueSet variable="can_move_modifier">
       <value value="5"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-death-odds">
+    <enumeratedValueSet variable="juv_death_odds">
       <value value="84"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-uninfecteds">
+    <enumeratedValueSet variable="initial_number_uninfecteds">
       <value value="70"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="uninfected-cannibalize?">
+    <enumeratedValueSet variable="uninfected_cannibalize">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infect-at-tick">
+    <enumeratedValueSet variable="infect_at_tick">
       <value value="true"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vertical-transmission">
+    <enumeratedValueSet variable="vertical_transmission">
       <value value="true"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="MovementOdds" first="20" step="1" last="40"/>
-    <enumeratedValueSet variable="cannibalism-level">
+    <steppedValueSet variable="movement_odds" first="20" step="1" last="40"/>
+    <enumeratedValueSet variable="cannibalism_level">
       <value value="20"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infectious-level">
+    <enumeratedValueSet variable="infectious_level">
       <value value="70"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="death-odds">
+    <enumeratedValueSet variable="death_odds">
       <value value="100"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-cannibalism-level">
+    <enumeratedValueSet variable="inf_cannibalism_level">
       <value value="90"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infection-arrival-time">
+    <enumeratedValueSet variable="infection_arrival_time">
       <value value="1600"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vert-trans-odds">
+    <enumeratedValueSet variable="vert_trans_odds">
       <value value="1.5"/>
     </enumeratedValueSet>
   </experiment>
@@ -1073,50 +1075,50 @@ NetLogo 5.2.0
     <exitCondition>ticks &gt; 1800 and count infecteds = 0</exitCondition>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
-    <enumeratedValueSet variable="initial-number-infecteds">
+    <enumeratedValueSet variable="initial_number_infecteds">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="maturation-time">
+    <enumeratedValueSet variable="maturation_time">
       <value value="168"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-move-modifier">
+    <enumeratedValueSet variable="juv_move_modifier">
       <value value="0.5"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="can-move-modifier" first="1" step="0.1" last="5"/>
-    <enumeratedValueSet variable="juv-death-odds">
+    <steppedValueSet variable="can_move_modifier" first="1" step="0.1" last="5"/>
+    <enumeratedValueSet variable="juv_death_odds">
       <value value="84"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-uninfecteds">
+    <enumeratedValueSet variable="initial_number_uninfecteds">
       <value value="70"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="uninfected-cannibalize?">
+    <enumeratedValueSet variable="uninfected_cannibalize">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infect-at-tick">
+    <enumeratedValueSet variable="infect_at_tick">
       <value value="true"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vertical-transmission">
+    <enumeratedValueSet variable="vertical_transmission">
       <value value="true"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="MovementOdds">
+    <enumeratedValueSet variable="movement_odds">
       <value value="40"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="cannibalism-level">
+    <enumeratedValueSet variable="cannibalism_level">
       <value value="20"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infectious-level">
+    <enumeratedValueSet variable="infectious_level">
       <value value="70"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="death-odds">
+    <enumeratedValueSet variable="death_odds">
       <value value="100"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-cannibalism-level">
+    <enumeratedValueSet variable="inf_cannibalism_level">
       <value value="90"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infection-arrival-time">
+    <enumeratedValueSet variable="infection_arrival_time">
       <value value="1600"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vert-trans-odds">
+    <enumeratedValueSet variable="vert_trans_odds">
       <value value="1.5"/>
     </enumeratedValueSet>
   </experiment>
@@ -1126,269 +1128,269 @@ NetLogo 5.2.0
     <timeLimit steps="10000"/>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
-    <enumeratedValueSet variable="infection-arrival-time">
+    <enumeratedValueSet variable="infection_arrival_time">
       <value value="1700"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="inf-death-modifier" first="0" step="0.025" last="0.5"/>
-    <enumeratedValueSet variable="juv-death-odds">
+    <steppedValueSet variable="inf_death_modifier" first="0" step="0.025" last="0.5"/>
+    <enumeratedValueSet variable="juv_death_odds">
       <value value="1.2"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-move-modifier">
+    <enumeratedValueSet variable="juv_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="MovementOdds">
+    <enumeratedValueSet variable="movement_odds">
       <value value="3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vert-trans-odds">
+    <enumeratedValueSet variable="vert_trans_odds">
       <value value="66"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="maturation-time">
+    <enumeratedValueSet variable="maturation_time">
       <value value="124"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-cannibalism-level">
+    <enumeratedValueSet variable="inf_cannibalism_level">
       <value value="80"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infectious-level">
+    <enumeratedValueSet variable="infectious_level">
       <value value="60"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-juv-death-modifier">
+    <enumeratedValueSet variable="inf_juv_death_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-uninfecteds">
+    <enumeratedValueSet variable="initial_number_uninfecteds">
       <value value="220"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="death-odds">
+    <enumeratedValueSet variable="death_odds">
       <value value="1"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-mature-modifier">
+    <enumeratedValueSet variable="inf_mature_modifier">
       <value value="40"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-fecund-modifier">
+    <enumeratedValueSet variable="inf_fecund_modifier">
       <value value="-1"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vertical-transmission">
+    <enumeratedValueSet variable="vertical_transmission">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="cannibalism-level">
+    <enumeratedValueSet variable="cannibalism_level">
       <value value="0.75"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infect-at-tick">
+    <enumeratedValueSet variable="infect_at_tick">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-infecteds">
+    <enumeratedValueSet variable="initial_number_infecteds">
       <value value="25"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="fecundity">
       <value value="8"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="can-move-modifier">
+    <enumeratedValueSet variable="can_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="uninfected-cannibalize?">
+    <enumeratedValueSet variable="uninfected_cannibalize">
       <value value="false"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="sensitivity_inf-fecund-modifier" repetitions="20" runMetricsEveryStep="true">
+  <experiment name="sensitivity_inf_fecund_modifier" repetitions="20" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="10000"/>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
-    <enumeratedValueSet variable="infection-arrival-time">
+    <enumeratedValueSet variable="infection_arrival_time">
       <value value="1700"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-death-modifier">
+    <enumeratedValueSet variable="inf_death_modifier">
       <value value="0.3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-death-odds">
+    <enumeratedValueSet variable="juv_death_odds">
       <value value="1.2"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-move-modifier">
+    <enumeratedValueSet variable="juv_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="MovementOdds">
+    <enumeratedValueSet variable="movement_odds">
       <value value="3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vert-trans-odds">
+    <enumeratedValueSet variable="vert_trans_odds">
       <value value="66"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="maturation-time">
+    <enumeratedValueSet variable="maturation_time">
       <value value="124"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-cannibalism-level">
+    <enumeratedValueSet variable="inf_cannibalism_level">
       <value value="80"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infectious-level">
+    <enumeratedValueSet variable="infectious_level">
       <value value="60"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-juv-death-modifier">
+    <enumeratedValueSet variable="inf_juv_death_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-uninfecteds">
+    <enumeratedValueSet variable="initial_number_uninfecteds">
       <value value="220"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="death-odds">
+    <enumeratedValueSet variable="death_odds">
       <value value="1"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-mature-modifier">
+    <enumeratedValueSet variable="inf_mature_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="inf-fecund-modifier" first="-4" step="0.25" last="0"/>
-    <enumeratedValueSet variable="vertical-transmission">
+    <steppedValueSet variable="inf_fecund_modifier" first="-4" step="0.25" last="0"/>
+    <enumeratedValueSet variable="vertical_transmission">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="cannibalism-level">
+    <enumeratedValueSet variable="cannibalism_level">
       <value value="0.75"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infect-at-tick">
+    <enumeratedValueSet variable="infect_at_tick">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-infecteds">
+    <enumeratedValueSet variable="initial_number_infecteds">
       <value value="25"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="fecundity">
       <value value="8"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="can-move-modifier">
+    <enumeratedValueSet variable="can_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="uninfected-cannibalize?">
+    <enumeratedValueSet variable="uninfected_cannibalize">
       <value value="false"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="sensitivity_maturation-time" repetitions="20" runMetricsEveryStep="true">
+  <experiment name="sensitivity_maturation_time" repetitions="20" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>go</go>
     <timeLimit steps="10000"/>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
-    <enumeratedValueSet variable="infection-arrival-time">
+    <enumeratedValueSet variable="infection_arrival_time">
       <value value="1700"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-death-modifier">
+    <enumeratedValueSet variable="inf_death_modifier">
       <value value="0.3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-death-odds">
+    <enumeratedValueSet variable="juv_death_odds">
       <value value="1.2"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-move-modifier">
+    <enumeratedValueSet variable="juv_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="MovementOdds">
+    <enumeratedValueSet variable="movement_odds">
       <value value="3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vert-trans-odds">
+    <enumeratedValueSet variable="vert_trans_odds">
       <value value="66"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="maturation-time" first="25" step="25" last="500"/>
-    <enumeratedValueSet variable="inf-cannibalism-level">
+    <steppedValueSet variable="maturation_time" first="25" step="25" last="500"/>
+    <enumeratedValueSet variable="inf_cannibalism_level">
       <value value="80"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infectious-level">
+    <enumeratedValueSet variable="infectious_level">
       <value value="60"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-juv-death-modifier">
+    <enumeratedValueSet variable="inf_juv_death_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-uninfecteds">
+    <enumeratedValueSet variable="initial_number_uninfecteds">
       <value value="220"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="death-odds">
+    <enumeratedValueSet variable="death_odds">
       <value value="1"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-mature-modifier">
+    <enumeratedValueSet variable="inf_mature_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-fecund-modifier">
+    <enumeratedValueSet variable="inf_fecund_modifier">
       <value value="-1"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vertical-transmission">
+    <enumeratedValueSet variable="vertical_transmission">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="cannibalism-level">
+    <enumeratedValueSet variable="cannibalism_level">
       <value value="0.75"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infect-at-tick">
+    <enumeratedValueSet variable="infect_at_tick">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-infecteds">
+    <enumeratedValueSet variable="initial_number_infecteds">
       <value value="25"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="fecundity">
       <value value="8"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="can-move-modifier">
+    <enumeratedValueSet variable="can_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="uninfected-cannibalize?">
+    <enumeratedValueSet variable="uninfected_cannibalize">
       <value value="false"/>
     </enumeratedValueSet>
   </experiment>
-  <experiment name="sensitivity_maturation-time_FAST" repetitions="20" runMetricsEveryStep="true">
+  <experiment name="sensitivity_maturation_time_FAST" repetitions="20" runMetricsEveryStep="true">
     <setup>setup</setup>
     <go>repeat 10 [ go ]</go>
     <timeLimit steps="10000"/>
     <metric>count uninfecteds</metric>
     <metric>count infecteds</metric>
-    <enumeratedValueSet variable="infection-arrival-time">
+    <enumeratedValueSet variable="infection_arrival_time">
       <value value="1700"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-death-modifier">
+    <enumeratedValueSet variable="inf_death_modifier">
       <value value="0.3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-death-odds">
+    <enumeratedValueSet variable="juv_death_odds">
       <value value="1.2"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="juv-move-modifier">
+    <enumeratedValueSet variable="juv_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="MovementOdds">
+    <enumeratedValueSet variable="movement_odds">
       <value value="3"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vert-trans-odds">
+    <enumeratedValueSet variable="vert_trans_odds">
       <value value="66"/>
     </enumeratedValueSet>
-    <steppedValueSet variable="maturation-time" first="25" step="25" last="500"/>
-    <enumeratedValueSet variable="inf-cannibalism-level">
+    <steppedValueSet variable="maturation_time" first="25" step="25" last="500"/>
+    <enumeratedValueSet variable="inf_cannibalism_level">
       <value value="80"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infectious-level">
+    <enumeratedValueSet variable="infectious_level">
       <value value="60"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-juv-death-modifier">
+    <enumeratedValueSet variable="inf_juv_death_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-uninfecteds">
+    <enumeratedValueSet variable="initial_number_uninfecteds">
       <value value="220"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="death-odds">
+    <enumeratedValueSet variable="death_odds">
       <value value="1"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-mature-modifier">
+    <enumeratedValueSet variable="inf_mature_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="inf-fecund-modifier">
+    <enumeratedValueSet variable="inf_fecund_modifier">
       <value value="-1"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="vertical-transmission">
+    <enumeratedValueSet variable="vertical_transmission">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="cannibalism-level">
+    <enumeratedValueSet variable="cannibalism_level">
       <value value="0.75"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="infect-at-tick">
+    <enumeratedValueSet variable="infect_at_tick">
       <value value="false"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="initial-number-infecteds">
+    <enumeratedValueSet variable="initial_number_infecteds">
       <value value="25"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="fecundity">
       <value value="8"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="can-move-modifier">
+    <enumeratedValueSet variable="can_move_modifier">
       <value value="0"/>
     </enumeratedValueSet>
-    <enumeratedValueSet variable="uninfected-cannibalize?">
+    <enumeratedValueSet variable="uninfected_cannibalize">
       <value value="false"/>
     </enumeratedValueSet>
   </experiment>
@@ -1405,7 +1407,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

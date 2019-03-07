@@ -47,12 +47,12 @@ parRange.list$inf_death_odds <- c(0,10)
 #### finally, let's do the real thing =============
 
 #### testing creating the Experiments in an XML file ==============
-testParams <- sampleLHS.func(10,paramRanges = parRange.list)
+testParams <- sampleLHS.func(10000,paramRanges = parRange.list)
 for(i in 1:length(parRange.list)){
   testParams[i] <- round(testParams[i],2)
 }
 
-write("<experiments>",file="GitHub/Cannibalism_ABM_Project/GSAExperiments.xml",append=T)
+write("<experiments>",file="GSAExperiments_full.xml",append=T)
 for(i in 1:length(testParams$V1)){
   line = rep(0,49)
   
@@ -74,9 +74,10 @@ for(i in 1:length(testParams$V1)){
 
   line[52] = '</experiment>'
   
-  write(line,file="GitHub/Cannibalism_ABM_Project/GSAExperiments.xml",append=T)
+  write(line,file="GSAExperiments_full.xml",append=T)
 }
-write("</experiments>",file="GitHub/Cannibalism_ABM_Project/GSAExperiments.xml",append=T)
+write("</experiments>",file="GSAExperiments_full.xml",append=T)
+
 
 ## Ok this works! I can also tweak it pretty easily to make it do multiple XML files, one per experiment.
 # Things to think about:

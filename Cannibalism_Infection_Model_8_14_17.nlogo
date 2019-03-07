@@ -25,6 +25,7 @@ end
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+; I should check on whether it makes a difference if I schedule various TYPES of activities together rather than by infection/etc.
 to go
   ask uninfecteds [death]
   ask uninfecteds [move]
@@ -346,7 +347,7 @@ maturation_time
 maturation_time
 0
 200
-0.0
+128.0
 1
 1
 NIL
@@ -361,7 +362,7 @@ death_odds
 death_odds
 0
 10
-0.0
+0.7
 .1
 1
 NIL
@@ -376,7 +377,7 @@ movement_odds
 movement_odds
 0
 100
-3.0
+4.0
 1
 1
 NIL
@@ -391,7 +392,7 @@ can_move_odds
 can_move_odds
 -50
 50
-0.0
+6.0
 1
 1
 NIL

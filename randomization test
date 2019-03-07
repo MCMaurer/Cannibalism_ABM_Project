@@ -1,0 +1,4 @@
+randomization test
+don't do parametric test at all- if there were no preferences what would it look like? That's a little simulation to make up a data set for randomness.
+is the diet selection different between the two groups (infected and uninfected)?
+could take all the diet selection responses for treatment A and B, mush them together and calculate overall average preferences, use that as null, and then simulate a whole bunch of datasets that draw from this null, then calculate the difference between the females from each treatment. Not making any assumptions about distribution or independence, brute force Monte Carlo simulation method.
