@@ -87,7 +87,7 @@ directory <- "../../../../Volumes/My Passport for Mac/Cann_ABM/"
 files <- list.files(directory)
 files <- files[str_detect(files, "Output")]
 
-map(files, add_to_db, con = con)
+#map(files, add_to_db, con = con)
 
 
 counts <- tbl(con, "counts")
@@ -95,5 +95,8 @@ params <- tbl(con, "params")
 params %>% arrange(run_number) %>% collect()
 
 counts %>% tally()
+# this gave back 100010000
+10000*10001 == 100010000
 
-
+# HELL YES THEY ARE ALL IN THERE
+# I'm now going to move the database from my external drive to my computer, since it's only 1.88GB

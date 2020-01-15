@@ -1,6 +1,8 @@
+.RData
+.Rhistory
+.Rproj.user
+.Ruserdata
 Cann_ABM_GSA_1.sqlite3
 Cann_Model_stripped_down inf_cann_mov_4_40runs-spreadsheet.csv
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
+*.tiff
+*.pdf
